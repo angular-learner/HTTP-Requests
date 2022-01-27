@@ -26,7 +26,8 @@ export class PostsService{
     fetchPosts(){
       return this.http.get<{[key:string]:Posts}>('https://ng-complete-guide-531b2-default-rtdb.firebaseio.com/posts.json',
       {headers : new HttpHeaders({"custom-header": "hello"}),
-       params: new HttpParams().set('print','pretty')
+       params: new HttpParams().set('print','pretty'),
+       responseType: 'json'
     }).
       pipe(map(responseData => {
         const postsArray = [];
@@ -46,7 +47,8 @@ export class PostsService{
     deletePosts(){
       return this.http.delete('https://ng-complete-guide-531b2-default-rtdb.firebaseio.com/posts.json',
       {
-        observe:'events'
+        observe:'events',
+        responseType: 'text'
       }).pipe(tap(events=>{
         console.log(events);
         if(events.type === HttpEventType.Response){
