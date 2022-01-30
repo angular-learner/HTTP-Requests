@@ -4,6 +4,10 @@ import { Observable } from "rxjs";
 export class AuthInceptorService implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log("way on its way");
-        return next.handle(req);
+        const modifiedReq = req.clone({
+            headers: req.headers.append('Auth', 'xyz')
+        })
+   
+        return next.handle(modifiedReq);
     }
 }
